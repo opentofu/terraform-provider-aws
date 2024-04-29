@@ -1,0 +1,33 @@
+name: Artifact Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (v#.#.#)"
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release-dispatch:
+    if: inputs.tag != ''
+    uses: opentofu/scripts/.github/workflows/release.yml@main
+    with:
+      tag: ${{ inputs.tag }}
+    secrets:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GH_PAT: ${{ secrets.GH_PAT }}
+      GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
+
+  release-push:
+    if: inputs.tag == ''
+    uses: opentofu/scripts/.github/workflows/release.yml@main
+    with:
+      tag: ${{ github.ref_name }}
+    secrets:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GH_PAT: ${{ secrets.GH_PAT }}
+      GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
