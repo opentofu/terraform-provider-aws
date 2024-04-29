@@ -1,0 +1,11 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '15 */4 * * *' # every 4 hours
+  workflow_dispatch: # on button click
+
+jobs:
+  sync:
+    uses: opentofu/scripts/.github/workflows/sync.yml@main
+    secrets: inherit
