@@ -1,0 +1,17 @@
+name: Artifacts Resign
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  resign:
+    uses: opentofu/scripts/.github/workflows/sign.yml@main
+    with:
+      owner: ${{ github.repository_owner }}
+      repo: ${{ github.event.repository.name }}
+    secrets:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GH_PAT: ${{ secrets.GH_PAT }}
