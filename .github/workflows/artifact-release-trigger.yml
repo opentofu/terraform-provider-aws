@@ -1,0 +1,12 @@
+name: Trigger Artifact Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  trigger:
+    uses: opentofu/scripts/.github/workflows/trigger.yml@main
